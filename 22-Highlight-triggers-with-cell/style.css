@@ -1,0 +1,56 @@
+:root{
+	--decay :10px;
+}
+
+body{
+	background-color: #7e64ff;
+	font-family: 'Open Sans';
+	font-size: 16px;
+	
+}
+
+body > *{
+	color: black;
+	width: 80%;
+	margin: 0 auto 20px auto;
+	background-color: rgba(255,255,255,0.1);
+	border-radius: 10px;
+}
+
+nav{
+	text-align: center;
+}
+
+nav > *{
+	padding:0 20px 0 20px;
+	font-size: 2em;
+}
+
+main > p{
+	padding: 0 15px 0 15px;
+	margin-top: 25px;
+}
+
+span#hl{
+	display: block;
+	background-color: white;
+	border-radius: 15px;
+	position: absolute;
+	z-index: -1;
+	left:0;
+	top:0;
+	width: 0px;
+
+	transition:all .4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+a{
+	text-decoration: none;
+	color:orange;
+	transition: margin .4s;
+}
+
+.hovered{
+	margin-left: var(--decay);
+	margin-right: var(--decay);
+}

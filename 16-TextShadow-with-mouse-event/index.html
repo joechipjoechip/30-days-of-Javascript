@@ -1,0 +1,177 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    	<style>
+    		body{
+				text-align: center;
+				font-size: 48px;
+				font-family: 'Open Sans';
+				margin: 0;
+				padding:0;
+				/*-webkit-transform-style: preserve-3d;*/
+    		}
+
+    		#container{
+    			width: 100%;
+    			height: 100vh;
+    			margin:0;
+    			padding: 0;
+    			background-color: #ffdc75;
+    			display: flex;
+    			justify-content: center;
+    			flex-direction: column;
+    		}
+
+    		#container > *{
+    			transform: rotate(-10deg);
+                transition: 
+                    text-shadow 8.5s cubic-bezier(.02,.82,.14,.97),
+                    box-shadow 8.5s cubic-bezier(.02,.82,.14,.97),
+                    top 8.5s cubic-bezier(.02,.82,.14,.97),
+                    left 8.5s cubic-bezier(.02,.82,.14,.97);
+                    color:white;
+                /*transition : text-shadow .6s cubic-bezier(0.68, -0.55, 0.27, 1.55);*/
+
+    		}
+
+    		#container p{
+                z-index: 2;
+    			font-size: 14px;
+    			width: 60%;
+                max-width: 700px;
+    			margin: 45px auto 0 auto;
+    			/*transform-origin: 100% 0%;*/
+    			/*background-color: transparent;*/
+    			border: solid 2px rgba(46, 204, 113,1.0);
+                /*border-radius: 0px;*/
+    			box-shadow: 0 0 0 rgba(0,0,0,0.1);
+    			position: relative;
+                padding: 25px;
+    		}
+
+    		h1{
+                z-index: 10;
+    			position: relative;
+    			display: block;
+    			margin:0 auto;
+    			padding: 0;
+    			/*width: 50%;*/
+    			text-transform: uppercase;
+    		}
+
+    		#suite{
+    			height: 300vh;
+    			background-color: #649fff;
+    		}
+    		#end{
+    			position: fixed;
+    			bottom: 0;
+    			opacity: 0;
+    		}
+
+
+    	</style>
+    </head>
+    <body>
+		
+		<div id="container">
+    		<h1>Wadup Bow</h1>
+    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis nobis repudiandae ex, minus dolorem pariatur similique maiores architecto impedit iusto? Quia consectetur repudiandae, asperiores delectus voluptate architecto repellendus nostrum soluta.</p>
+    	</div>
+
+    	<div id="suite">
+    		<h2 id="end">THE END</h2>
+    	</div>
+
+        <script>
+
+        	const body = document.querySelector('body');
+        	const contained = document.querySelector('#container');
+            const title = contained.querySelector('h1');
+        	const parag = contained.querySelector('p');
+        	const ended = document.querySelector('#end');
+        	const walk = 45;
+
+        	function h1Shadow(e){
+
+        		const width = contained.offsetWidth;
+        		const height = contained.offsetHeight;
+
+        		let x = e.offsetX;
+        		let y = e.offsetY;
+
+        		if(this !== e.target){
+        			x += e.target.offsetLeft;
+        			y += e.target.offsetTop;
+        		}
+
+        		const calcX = ((x / width * walk) - (walk / 2)).toFixed(2);
+        		const calcY = ((y / height * walk) - (walk / 2)).toFixed(2);
+
+                console.log(calcX, calcY);
+
+                let pos = {
+                    x : calcX,
+                    y : calcY
+                };
+
+        		this.querySelector('h1').style.textShadow = `
+        			${calcX * -0.85}px 
+        			${calcY * -0.55}px 
+        			0 
+                    rgba(46, 204, 113,1.0)
+        		`;
+
+                this.querySelector('p').style.cssText = `
+                    left: ${calcX * -2}px;
+                    top: ${calcY * -2}px;
+                    box-shadow: ${calcX * -2.5}px ${calcY * -2.5}px 0 rgba(46, 204, 113,1.0)
+                `;
+        	}
+
+        	function h1Scroll(e){
+        		const ratio = container.offsetHeight / body.offsetHeight;
+        		const scrollLevel = (window.scrollY + window.innerHeight) / body.offsetHeight;
+
+        		let calcOpacity = (Math.ceil((scrollLevel - ratio) * 100) / 100) - ratio;
+        		calcOpacity = parseFloat((calcOpacity * 2).toFixed(2));
+
+        		console.log(ratio, scrollLevel.toFixed(2), calcOpacity);
+
+        		
+
+        		ended.style.opacity = `${calcOpacity}`;
+        	}
+
+        	contained.addEventListener('mousemove', h1Shadow);
+        	window.addEventListener('scroll', h1Scroll);
+
+
+
+            // const observer = new MutationObserver((mutations) => {
+            //     mutations.forEach((mutationRecord) => {
+            //         console.log('style changed!', mutationRecord.target.attributes.style.nodeValue);
+
+            //         let leStyle = mutationRecord.target.attributes.style.nodeValue;
+
+            //         if(!leStyle.match(/color:red/gi))
+            //             mutationRecord.target.attributes.style.nodeValue+= `color:red`;
+            //     });    
+            // });
+
+            // var target = parag;
+            // observer.observe(target, { attributes : true, attributeFilter : ['style'] });
+
+
+        </script>
+    </body>
+</html>

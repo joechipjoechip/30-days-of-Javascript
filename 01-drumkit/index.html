@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Drumkit</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+
+        <link rel="stylesheet" href="drumkit.css">
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script> -->
+        <!--<link rel="stylesheet" href="css/main.css"> -->
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <p>Welcome in the drumkit exercice !</p>
+
+
+    	<section class="container">
+    		<div data-key="65" class="square">A</div>
+    		<div data-key="90" class="square">Z</div>
+    		<div data-key="69" class="square">E</div>
+    		<div data-key="82" class="square">R</div>
+    		<div data-key="84" class="square">T</div>
+    		<div data-key="89" class="square">Y</div>
+    		<div data-key="85" class="square">U</div>
+    		<div data-key="73" class="square">I</div>
+    		<div data-key="79" class="square">O</div>
+    	</section>
+
+    	<audio src="sounds/boom.wav" data-key="65"></audio>
+    	<audio src="sounds/clap.wav" data-key="90"></audio>
+    	<audio src="sounds/hihat.wav" data-key="69"></audio>
+    	<audio src="sounds/kick.wav" data-key="82"></audio>
+    	<audio src="sounds/openhat.wav" data-key="84"></audio>
+    	<audio src="sounds/ride.wav" data-key="89"></audio>
+    	<audio src="sounds/snare.wav" data-key="85"></audio>
+    	<audio src="sounds/tink.wav" data-key="73"></audio>
+    	<audio src="sounds/tom.wav" data-key="79"></audio>
+
+
+        <script>
+            playSound = e => {
+            	const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            	if(!audio) return;
+
+            	const element = document.querySelector(`.square[data-key="${e.keyCode}"]`);
+            	element.classList.add('playing');
+
+            	audio.currentTime = 0;
+            	audio.play();
+            };
+
+            function removeClass(e){
+            	if(e.propertyName !== 'transform') return;
+            	this.classList.remove('playing');
+            }
+
+
+            window.addEventListener('keydown', playSound);
+            const keys = document.querySelectorAll('.square');
+
+            keys.forEach(function(key){
+            	key.addEventListener('transitionend', removeClass);
+            });
+
+
+
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
+</html>

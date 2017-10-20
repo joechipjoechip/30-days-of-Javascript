@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+        <link rel="stylesheet" href="ajax.css"> 
+    </head>
+    <body>
+
+		<input type="text" name="lookFor">
+        <ul>
+        </ul>
+
+
+
+        
+        <script>
+        	const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+        	let cities = [];
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            fetch(endpoint)
+    			.then(blob => blob.json())
+    			.then(data => cities = data);
+
+            function findMatches(lookFor, cities){
+                return cities.filter(element => {
+                    const regex = new RegExp(lookFor, 'gi');
+                    return element.city.match(regex) || element.state.match(regex);
+                })
+            }
+
+            function displayMatches(){
+                const matchesArr = findMatches(this.value, cities);
+                const match = new RegExp(this.value,'gi');
+
+                const html = matchesArr
+                                .map(element =>{
+                                    
+                                    const cityName = element.city.replace(match, `<span class="hl">${this.value}</span>`)
+                                    const stateName = element.state.replace(match, `<span class="hl">${this.value}</span>`)
+
+                                    return `<li class="item">
+                                            <span class="city">${cityName}</span>
+                                            <span class="state">${stateName}</span>
+                                            <span class="population">${numberWithCommas(element.population)} people</span>
+                                        </li>`;
+                                })
+                                .join('');
+
+                list.innerHTML = html;
+
+                setTimeout(function(){
+                    list.querySelectorAll('.item').forEach(element => {
+                        return !element.classList.value.includes('active') ? element.classList.add('active') : null;
+                    });
+                }, 10);
+                
+            }
+
+            const input = document.querySelector('input');
+            const list = document.querySelector('ul');
+
+
+            input.addEventListener('keyup', displayMatches);
+
+
+
+
+
+
+            
+
+        </script>
+    </body>
+</html>

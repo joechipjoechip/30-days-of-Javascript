@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Synthesis</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="voiceinator">
+
+    <h1>The Voiceinator 5000</h1>
+
+    <select data-name="voice" id="voices">
+      <option value="">Select A Voice</option>
+    </select>
+
+    <label for="rate">Rate:</label>
+    <input data-name="rate" type="range" min="1" max="3" value="1" step="0.1">
+
+    <label for="pitch">Pitch:</label>
+
+    <input data-name="pitch" type="range" min="0" max="2" step="0.1">
+    <textarea data-name="text">Hello! I love JavaScript 👍</textarea>
+    <button data-action="stop">Stop!</button>
+    <button data-action="play">Speak</button>
+
+  </div>
+
+  <script>
+    const msg = new SpeechSynthesisUtterance();
+    let voices = [];
+    
+    const voicesDropdown = document.querySelector('[data-name="voice"]');
+    const actions = document.querySelectorAll('[data-action]');
+    const inputs = document.querySelectorAll('[data-name]');
+
+    msg.text = document.querySelector('[data-name="text"]').value;
+
+
+
+    function populateVoicesList(){
+      voices = speechSynthesis.getVoices();
+
+      const voicesList = voices.map((element, index) =>{
+        let item = document.createElement('option');
+        item.setAttribute('value', index);
+        item.innerHTML = element.name;
+
+        // useless span puisqu'on est dans un menu déroulant (instylisable en l'état), mais bon..
+        let spanLang = document.createElement('span');
+        spanLang.classList.add('spanLang');
+        spanLang.innerHTML = element.lang + ' - ';
+
+        item.insertBefore(spanLang, item.firstChild);
+        return item;
+      });
+
+      voicesList.forEach(element => voicesDropdown.appendChild(element));
+    }
+
+
+    function updateText(e){ msg.text = e.target.value }
+
+    function speakOrQuiet(e){
+      if(!speechSynthesis.speaking)
+        speechSynthesis.speak(msg);
+    }
+
+    function inputChange(e){
+
+      switch (e.target.dataset.name) {
+        case 'voice':
+          msg.voice = voices[e.target.value]
+          break;
+        case 'text':
+          msg.text = e.target.value
+          break;
+        case 'pitch':
+          msg.pitch = parseFloat(e.target.value);
+          break;
+        case 'rate':
+          msg.rate = parseFloat(e.target.value);
+          break;
+      }
+    }
+
+    function actionReq(e){
+
+      switch (this.dataset.action){
+        case 'play':
+            speechSynthesis.speak(msg);
+          break;
+
+        case 'stop' :
+            speechSynthesis.cancel(msg);
+          break;
+      }
+    }
+
+    speechSynthesis.addEventListener('voiceschanged', () => populateVoicesList());
+
+    inputs.forEach(element => {
+      element.addEventListener('change', inputChange);
+    });
+
+    actions.forEach(element =>{
+      element.addEventListener('click', actionReq);
+    });
+
+
+  </script>
+
+</body>
+</html>

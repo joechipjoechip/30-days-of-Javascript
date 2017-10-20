@@ -1,0 +1,41 @@
+body{
+	width: 100%;
+}
+
+.clock{
+	position: relative;
+	width: 450px;
+	height: 450px;
+	border-radius: 50%;
+	border: solid 10px lightblue;
+	transform: rotate(90deg);
+	margin: 50px auto 0 auto;
+}
+
+
+.hand{
+	position: absolute;
+	height: 6px;
+	background-color: black;
+	transform-origin: 100%;
+	transform: rotate(0);
+	top:50%;
+	right: 50%;
+	transition: transform .3s;
+	transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.hand-hours{
+	width: 100px;
+	background-color: red;
+}
+
+.hand-minutes{
+	width: 160px;
+	background-color: green;
+}
+
+.hand-seconds{
+	width: 195px;
+	background-color: purple;
+}

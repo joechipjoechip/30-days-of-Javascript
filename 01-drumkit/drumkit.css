@@ -1,0 +1,25 @@
+body{
+	width: 100%;
+}
+
+.container{
+	display: block;
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.square{
+	height: 40px;
+	width: 80px;
+	margin:0 10px;
+	display: inline-block;
+	background-color: #55d9b5;
+	transition: all .05s;
+}
+
+.playing{
+	height: 80px;
+	transform:scale(1.1);
+	background-color: #55ffb5;
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+
+        <link rel="stylesheet" href="clock.css">
+    </head>
+    <body>
+
+    	<div class="clock">
+    		<div class="hand hand-hours"></div>
+    		<div class="hand hand-minutes"></div>
+    		<div class="hand hand-seconds"></div>
+    	</div>
+
+        <script>
+
+        function setClock(hours, minutes, seconds){
+        	document.querySelector('.hand-hours').style.transform = `rotate(${hours}deg)`;
+        	document.querySelector('.hand-minutes').style.transform = `rotate(${minutes}deg)`;
+        	document.querySelector('.hand-seconds').style.transform = `rotate(${seconds}deg)`;
+        }
+
+        	function setDate() {
+        		const now = new Date();
+
+        		const seconds = now.getSeconds();
+        		const secondsDeg = (seconds / 60) * 360;
+
+        		const minutes = now.getMinutes();
+        		const minutesDeg = (minutes / 60) * 360;
+
+        		const hours = now.getHours();
+        		const hoursDeg = (hours / 12) * 360;
+
+        		//avoid tilt of hand
+        		if(secondsDeg === 0) document.querySelector('.hand-seconds').style.transition = 'none';
+        		else document.querySelector('.hand-seconds').style.transition = 'transform .3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+
+        		// launch clock
+        		setClock(hoursDeg, minutesDeg, secondsDeg);
+        	}
+
+
+
+
+
+        	setInterval(setDate, 1000);
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+		<style>
+			body{
+				cursor: pointer;
+			}
+			#fusion{
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				z-index: 10;
+				color: black;
+			}
+			#canvas{
+				z-index: 2;
+			}
+		</style>
+    </head>
+    <body>
+        <canvas id="draw" height="800" width="800"></canvas>
+        <p id="fusion"></p>
+        <script>
+        //on get le canvas
+        const canvas = document.getElementById('draw');
+
+        //on détermine le contexte (2d ou 3d) dans ctx
+        const ctx = canvas.getContext('2d');
+
+        //on resize le canvas pour qu'il occupe toute la fenetre
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        //on détermine des bases pour le contexte :
+        ctx.strokeStyle = '#ff934a';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        //ctx.lineWidth = 30;
+
+        //tricks style photoshop fusion : multiply = produit
+        const fusionTextContainer = document.getElementById('fusion');
+        const fusions = [
+        	"source-over",
+        	"source-atop",
+        	"destination-over",
+        	"lighter",
+        	"multiply",
+        	"screen",
+        	"overlay",
+        	"lighten",
+        	"color-dodge",
+        	"color-burn",
+        	"hard-light",
+        	"soft-light",
+        	"hue",
+        	"color",
+        	"luminosity"
+        	];
+
+        ctx.globalCompositeOperation = null;
+
+        
+
+
+
+        //on fait une tite variable qui va stocker l'état de notre souris
+        let isDrawing = false;
+
+        //on fait des tites var qui vont stocker les dernières positions connues d'un click
+        let lastX = 0;
+        let lastY = 0;
+        let hue = 0;
+        let direction = true;
+        let lastFusion = {
+        	"step" : 0
+        };
+
+        fusionTextContainer.innerHTML = 'mode : normal';
+
+
+        function draw(e){
+        	if(!isDrawing) return;
+
+        	ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+        	ctx.beginPath();
+        	ctx.moveTo(lastX, lastY);
+        	ctx.lineTo(e.offsetX, e.offsetY);
+        	ctx.stroke();
+
+        	lastX = e.offsetX;
+        	lastY = e.offsetY;
+
+        	// changement et reset de la couleur
+        	hue++;
+        	if(hue > 360) hue = 0;
+
+        	// changement de la largeur de pinceau
+        	if(ctx.lineWidth >= 200 || ctx.lineWidth <= 1)
+        		direction = !direction;
+
+        	direction ? ctx.lineWidth++ : ctx.lineWidth--;
+        	//console.log(e);
+        }
+
+        function changeMode(){
+        	if(lastFusion.step >= fusions.length)
+        		lastFusion.step = 0;
+
+        	if(fusions[lastFusion.step + 1]) 
+        		fusionTextContainer.innerHTML = `and now : ${fusions[lastFusion.step + 1]}`;
+        	
+        	lastFusion.step++;
+        	ctx.globalCompositeOperation = fusions[lastFusion.step]; 
+        }
+
+   
+
+
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mousedown', (e) => {
+        	isDrawing = true;
+			lastX = e.offsetX;
+        	lastY = e.offsetY;      	
+        });
+
+
+
+        canvas.addEventListener('mouseup', () => {
+        	isDrawing = false;
+        	changeMode(); 
+        });
+        canvas.addEventListener('mouseout', () => {
+        	isDrawing = false
+        	changeMode();
+        });
+
+
+
+        </script>
+    </body>
+</html>

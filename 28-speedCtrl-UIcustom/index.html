@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <video class="flex" width="765" height="430" src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+
+	const video = document.querySelector('video');
+	const speed = document .querySelector('.speed');
+	const speedBar = document .querySelector('.speed-bar');
+	let isDown = false;
+	const minSpeed = 0.5;
+	const maxSpeed = 4;
+
+
+	function getPercent(htmlContainer, htmlInsider, prop){
+		let finalPercent;
+		if(typeof htmlInsider === 'number'){
+			finalPercent = htmlInsider;
+		}else{
+			finalPercent = window.getComputedStyle(htmlInsider).getPropertyValue(prop);
+			finalPercent = finalPercent.replace('px','');
+			finalPercent = parseFloat(finalPercent);
+		}
+		
+		finalPercent = (finalPercent / htmlContainer.offsetHeight).toFixed(3) * 100;
+		return finalPercent;
+	}
+
+
+	speed.addEventListener('mousedown', e => {
+		isDown = true;
+		speed.classList.add('active');
+	});
+
+	speed.addEventListener('mouseup', e => {
+		isDown = false;
+		speed.classList.remove('active');
+	});
+
+	speed.addEventListener('mouseleave', e => {
+		isDown = false;
+		speed.classList.remove('active');
+	});
+
+	speed.addEventListener('mousemove', e => {
+		if(!isDown) return;
+		e.preventDefault();
+
+		const setPos = e.pageY - speed.offsetTop
+		const percentage = getPercent(speed, setPos, 'height');
+
+		speedBar.style.height = `${percentage}%`;
+
+		const valRate = ((percentage / 100) * (maxSpeed - minSpeed) + minSpeed).toFixed(1);
+
+		speedBar.textContent = `${valRate} X`;
+
+		video.playbackRate = valRate;
+
+	});
+
+	// init de la valeur numérique affichée dans la speed-bar
+	speedBar.textContent = `${(getPercent(speed, speedBar, 'height') / 100 * (maxSpeed - minSpeed) + minSpeed).toFixed(1)} X`;
+
+</script>
+</body>
+</html>

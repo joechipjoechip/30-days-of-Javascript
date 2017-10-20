@@ -1,0 +1,57 @@
+:root{
+	font-size: 14px;
+	font-family: 'Open Sans';
+}
+
+body{
+	text-align: center;
+}
+
+input{
+	width: 95%;
+	max-width: 450px;
+	margin: 45px auto 0 auto;
+	padding: 15px;
+	border: solid 2px #8aff32;
+	color: black;
+	text-align: center;
+	outline: none;
+	border-radius: 35px;
+}
+
+ul{
+	position: relative;
+	width: 95%;
+	max-width: 450px;
+	margin: 0 auto;
+	padding:0;
+	list-style: none;
+}
+
+.item{
+	background-color: rgba(0,0,0,0.07);
+	position: relative;
+	padding:10px 0 4px 0;
+	border-bottom:solid 3px #646d66;
+	text-transform: capitalize;
+	opacity: 0.3;
+	transition: opacity .4s;
+}
+
+.active{ opacity:1;}
+
+li span.city{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+li span.state{
+	font-size: 0.85em;
+}
+li span.population{
+	font-size: 0.9em;
+	font-style:italic;
+}
+
+.hl{
+	background-color: #f8c548;
+}

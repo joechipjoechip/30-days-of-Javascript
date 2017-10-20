@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+        <link rel="stylesheet" href="flexpanels.css"> 
+    </head>
+    <body>
+
+    	<div class="panels">
+    		<div class="panel panel1">
+    			<p>Hey</p>
+    			<p>Let's</p>
+    			<p>Go !</p>
+    		</div>
+    		<div class="panel panel2">
+    			<p>Hey</p>
+    			<p>Let's</p>
+    			<p>Go !</p>
+    		</div>
+    		<div class="panel panel3">
+    			<p>Hey</p>
+    			<p>Let's</p>
+    			<p>Go !</p>
+    		</div>
+    		<div class="panel panel4">
+    			<p>Hey</p>
+    			<p>Let's</p>
+    			<p>Go !</p>
+    		</div>
+    		<div class="panel panel5">
+    			<p>Hey</p>
+    			<p>Let's</p>
+    			<p>Go !</p>
+    		</div>
+    	</div>
+
+
+
+        <script>
+
+        	const panels = document.querySelectorAll('.panel');
+
+        	function toggleOpen(){
+        		panels.forEach( panel => panel.classList.value.includes('open') ? panel.classList.remove('open') : null);
+        		this.classList.toggle('open');
+        	}
+
+        	function toggleOpenActive(e){
+        		console.log(e);
+				e.propertyName.includes('flex') ? this.classList.toggle('open-active') : null;
+        	}
+
+        	panels.forEach( panel => panel.addEventListener('click', toggleOpen));
+        	panels.forEach( panel => panel.addEventListener('transitionend', toggleOpenActive));
+
+        </script>
+    </body>
+</html>

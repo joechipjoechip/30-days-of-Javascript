@@ -1,0 +1,77 @@
+:root{
+	font-size: 12px;
+}
+
+body{
+	text-align: center;
+}
+
+.panels{
+	min-height: 100vh;
+	overflow: hidden;
+	display: flex;
+}
+
+.panel{
+	background-color: #6b0f9c;
+	color:white;
+	align-items: center;
+	background-position: center;
+	background-size: cover;
+	font-size: 2em;
+
+	align-items: center;
+	justify-content: center;
+	flex : 1;
+	display: flex;
+	flex-direction: column;
+
+	transition:
+		flex .7s,
+		font-size 1.5s;
+}
+
+.panel.open{
+	flex:5;
+	font-size: 4em;
+}
+
+.panel1{
+	background-image: url(img/lac.jpg);
+}
+.panel2{
+	background-image: url(img/paris.jpg);
+}
+.panel3{
+	background-image: url(img/moutain.jpg);
+}
+.panel4{
+	background-image: url(img/space.jpg);
+}
+.panel5{
+	background-image: url(img/forest.jpg);
+}
+
+.panel > *{
+	margin:0;
+	width: 100%;
+	flex : 1;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform .8s;
+}
+
+.panel > *:first-child{ transform: translateY(-100%); }
+.panel.open-active > *:first-child{ transform: translateY(0); }
+
+.panel > *:last-child{ transform: translateY(100%); }
+.panel.open-active > *:last-child{ transform: translateY(0); }
+
+
+
+
+
+
+
